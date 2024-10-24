@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: ms-sale-listener
+  profiles:
+    default: default
+  config:
+    import: "optional:configserver:http://localhost:7777"
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+      function:
+        bindings:
+          consumerStream-in-0:
+            destination: consumerStream
+  data:
+    mongodb:
+      authentication-database: ${db.authentication-db}
+      host: ${db.host}
+      port: ${db.port}
+      username: ${db.usr}
+      password: ${db.pwd}
+server:
+  port: 0
+
+eureka:
+  instance:
+    instance-id: "${spring.application.name}:${random.value}"
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+
+
